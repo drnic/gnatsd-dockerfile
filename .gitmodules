@@ -1,0 +1,3 @@
+[submodule "gnatsd"]
+	path = gnatsd
+	url = https://github.com/apcera/gnatsd.git
