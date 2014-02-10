@@ -3,13 +3,10 @@
 # AUTHOR:         Dr Nic Williams <drnicwilliams@gmail.com>
 # DESCRIPTION:    Image with gnatsd project and dependecies
 # TO_BUILD:       git submodule update --init && docker build -t gnatsd .
-# TO_RUN:         docker run -d -p 4222:4222 -p 4244:4244 -p 8222:8222-v $(pwd):/config gnatsd
+# TO_RUN:         docker run -p 4222:4222 -p 4244:4244 -p 8222:8222 -v $(pwd):/config -v $(pwd)/log:/log gnatsd
 
 FROM miksago/ubuntu-go
 
-ADD gnatsd /gnatsd
-
-ENV dev_version 1
 RUN mkdir -p /tmp/src/github.com/apcera
 ADD gnatsd /tmp/src/github.com/apcera/gnatsd
 
@@ -24,5 +21,6 @@ EXPOSE 4244
 EXPOSE 8222
 
 VOLUME /config
+VOLUME /log
 
 CMD ["gnatsd", "-c", "/config/gnatsd.conf"]
