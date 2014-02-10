@@ -5,10 +5,11 @@
 ## Usage
 
 ```
-$ git submodule update --init
-$ docker build -t gnatsd .
-$ REGISTRY_ID=$(docker run -d -p 4222:4222 -p 4244:4244 -p 8222:8222 gnatsd)
+$ REGISTRY_ID=$(docker run -d -p 4222:4222 -p 8222:8222 -v $(pwd):/config -v $(pwd)/log:/log drnic/gnatsd)
 ```
+
+See [Build from Dockerfile](#build-from-dockerfile) for instructions on modifying and building the Docker image again from the Dockerfile.
+
 
 You can now test its internal state:
 
@@ -72,4 +73,12 @@ $ curl http://localhost:8222/connz
   "num_connections": 1,
   "connections": [...]
 }
+```
+
+## Build from Dockerfile
+
+```
+$ git submodule update --init
+$ docker build -t gnatsd .
+$ REGISTRY_ID=$(docker run -d -p 4222:4222 -p 8222:8222 -v $(pwd):/config -v $(pwd)/log:/log gnatsd)
 ```
